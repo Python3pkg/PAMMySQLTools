@@ -1,7 +1,7 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+
+
+
+
 
 from builtins import int
 from builtins import open
@@ -456,7 +456,7 @@ def importusers(ignore_password, config, lower, upper):
             line.strip()
             s = line.split(':')
 
-            if s[0] in users.keys():
+            if s[0] in list(users.keys()):
                 for i in range(len(s)):
                     if not s[i].strip():
                         s[i] = None
@@ -498,7 +498,7 @@ def importgroups(ignore_password, config, lower, upper):
             line.strip()
             gs = line.split(':')
 
-            if gs[0] in groups.keys():
+            if gs[0] in list(groups.keys()):
                 for i in range(len(gs)):
                     if not gs[i].strip():
                         gs[i] = None

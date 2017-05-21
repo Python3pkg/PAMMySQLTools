@@ -1,7 +1,7 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+
+
+
+
 
 # noinspection PyUnresolvedReferences
 from backports.configparser import ConfigParser
@@ -56,15 +56,15 @@ class ManagerTests(unittest.TestCase):
 
 
 class UserManagerTests(ManagerTests):
-    testuser = {u'username': 'testuser', u'mini': 1, u'shell': '/bin/sh', u'homedir': '/home/testuser', u'lstchg': 0,
-                u'maxi': 2, u'warn': 3, u'flag': 6, u'gid': 1000, u'gecos': 'Testuser', u'expire': 5, u'inact': 4,
-                u'password': 'ABCD', u'uid': 1000}
-    testuser2 = {u'username': 'testuser2', u'mini': 8, u'shell': '/bin/bash', u'homedir': '/home/testuser2',
-                 u'lstchg': 7, u'maxi': 9, u'warn': 10, u'flag': 13, u'gid': 1001, u'gecos': 'Testuser2', u'expire': 12,
-                 u'inact': 11, u'password': 'EFGH', u'uid': 1001}
-    testuser3 = {u'username': 'testuser3', u'mini': 15, u'shell': '/bin/zsh', u'homedir': '/home/testuser3',
-                 u'lstchg': 14, u'maxi': 16, u'warn': 17, u'flag': 20, u'gid': 1000, u'gecos': 'Testuser3',
-                 u'expire': 19, u'inact': 18, u'password': 'EFGH', u'uid': 1001}
+    testuser = {'username': 'testuser', 'mini': 1, 'shell': '/bin/sh', 'homedir': '/home/testuser', 'lstchg': 0,
+                'maxi': 2, 'warn': 3, 'flag': 6, 'gid': 1000, 'gecos': 'Testuser', 'expire': 5, 'inact': 4,
+                'password': 'ABCD', 'uid': 1000}
+    testuser2 = {'username': 'testuser2', 'mini': 8, 'shell': '/bin/bash', 'homedir': '/home/testuser2',
+                 'lstchg': 7, 'maxi': 9, 'warn': 10, 'flag': 13, 'gid': 1001, 'gecos': 'Testuser2', 'expire': 12,
+                 'inact': 11, 'password': 'EFGH', 'uid': 1001}
+    testuser3 = {'username': 'testuser3', 'mini': 15, 'shell': '/bin/zsh', 'homedir': '/home/testuser3',
+                 'lstchg': 14, 'maxi': 16, 'warn': 17, 'flag': 20, 'gid': 1000, 'gecos': 'Testuser3',
+                 'expire': 19, 'inact': 18, 'password': 'EFGH', 'uid': 1001}
 
     @classmethod
     def setUpClass(cls):
@@ -131,20 +131,20 @@ class UserManagerTests(ManagerTests):
         self.um.adduser(**self.testuser)
         self.um.adduser(**self.testuser3)
 
-        self.um.modallgid(self.testuser[u'gid'], self.testuser2[u'gid'])
+        self.um.modallgid(self.testuser['gid'], self.testuser2['gid'])
 
         user = self.um.getuserbyusername(self.testuser['username'])
         del user['id']
-        self.assertEqual(user[u'gid'], self.testuser2[u'gid'])
+        self.assertEqual(user['gid'], self.testuser2['gid'])
 
         user = self.um.getuserbyusername(self.testuser3['username'])
         del user['id']
-        self.assertEqual(user[u'gid'], self.testuser2[u'gid'])
+        self.assertEqual(user['gid'], self.testuser2['gid'])
 
 
 class GroupManagerTests(ManagerTests):
-    testgroup = {u'name': u'testgroup', u'gid': 1000, u'password': u'ABCD'}
-    testgroup2 = {u'name': u'testgroup2', u'gid': 1001, u'password': u'EFGH'}
+    testgroup = {'name': 'testgroup', 'gid': 1000, 'password': 'ABCD'}
+    testgroup2 = {'name': 'testgroup2', 'gid': 1001, 'password': 'EFGH'}
 
     @classmethod
     def setUpClass(cls):
@@ -213,9 +213,9 @@ class GroupManagerTests(ManagerTests):
 
 
 class GroupListManagerTests(ManagerTests):
-    testgrouplist = {u'username': u'testuser', u'gid': 1000}
-    testgrouplist2 = {u'username': u'testuser', u'gid': 1001}
-    testgrouplist3 = {u'username': u'testuser2', u'gid': 1000}
+    testgrouplist = {'username': 'testuser', 'gid': 1000}
+    testgrouplist2 = {'username': 'testuser', 'gid': 1001}
+    testgrouplist3 = {'username': 'testuser2', 'gid': 1000}
 
     @classmethod
     def setUpClass(cls):
@@ -260,7 +260,7 @@ class GroupListManagerTests(ManagerTests):
         self.glm.addgroupuser(**self.testgrouplist)
         self.glm.addgroupuser(**self.testgrouplist2)
 
-        self.glm.modallgroupuser(self.testgrouplist[u'username'], self.testgrouplist3[u'username'])
+        self.glm.modallgroupuser(self.testgrouplist['username'], self.testgrouplist3['username'])
 
         with self.assertRaises(KeyError):
             self.glm.getgroupsforusername(self.testgrouplist['username'])
@@ -272,13 +272,13 @@ class GroupListManagerTests(ManagerTests):
         self.glm.addgroupuser(**self.testgrouplist)
         self.glm.addgroupuser(**self.testgrouplist3)
 
-        self.glm.modallgroupgid(self.testgrouplist[u'gid'], self.testgrouplist2[u'gid'])
+        self.glm.modallgroupgid(self.testgrouplist['gid'], self.testgrouplist2['gid'])
 
-        self.assertNotIn(self.testgrouplist[u'gid'],
-                         self.glm.getgroupsforusername(self.testgrouplist[u'username']))
+        self.assertNotIn(self.testgrouplist['gid'],
+                         self.glm.getgroupsforusername(self.testgrouplist['username']))
 
-        self.assertNotIn(self.testgrouplist3[u'gid'],
-                         self.glm.getgroupsforusername(self.testgrouplist3[u'username']))
+        self.assertNotIn(self.testgrouplist3['gid'],
+                         self.glm.getgroupsforusername(self.testgrouplist3['username']))
 
 
 if __name__ == '__main__':
